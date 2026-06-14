@@ -39,10 +39,10 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
   const totalBlocks = activeWorkout.blocks.length;
 
   return (
-    <div className="p-4 space-y-4 pb-24">
+    <div className="p-4 flex flex-col min-h-full pb-6">
       
       {/* Day Selector & Progress */}
-      <div className="flex items-center gap-3 pb-2 pt-2">
+      <div className="flex items-center gap-3 pb-3 shrink-0">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1">
           {WORKOUT_DAYS.map(day => (
              <button 
@@ -59,33 +59,33 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="flex flex-col pb-4">
         {activeBlock && (
           activeBlock.type === 'single' ? (
             <ExerciseCard key={activeBlock.id} item={activeBlock} logs={logs} updateSetLog={updateSetLog} startTimer={startTimer} timer={timer} formatTime={formatTime} />
           ) : (
-            <div key={activeBlock.id} className="relative bg-zinc-900 border border-orange-900/40 rounded-xl overflow-hidden p-1 group shadow-none">
-               <div className="flex items-center justify-between px-3 pt-3 pb-2">
-                 <span className="text-[10px] text-orange-500 uppercase font-mono tracking-widest px-2 py-1 bg-orange-500/10 rounded">{activeBlock.name} ({activeBlock.type})</span>
+            <div key={activeBlock.id} className="relative bg-zinc-900 border border-orange-900/40 rounded-xl overflow-hidden p-1 group shadow-none flex flex-col">
+               <div className="flex items-center justify-between px-2 pt-2 pb-1.5 shrink-0">
+                 <span className="text-[9px] text-orange-500 uppercase font-mono tracking-widest px-2 py-1 bg-orange-500/10 rounded">{activeBlock.name} ({activeBlock.type})</span>
                  <div className="flex items-center gap-2">
                    {timer > 0 && (
-                      <div className="px-2.5 py-1 bg-indigo-600/10 border border-indigo-600/30 text-indigo-400 rounded-full flex items-center gap-1.5 font-mono text-[10px] shadow-sm">
-                        <TimerIcon className="w-3.5 h-3.5" />
+                      <div className="px-2 py-0.5 bg-indigo-600/10 border border-indigo-600/30 text-indigo-400 rounded-full flex items-center gap-1 font-mono text-[9px] shadow-sm">
+                        <TimerIcon className="w-3 h-3" />
                         {formatTime(timer)}
                       </div>
                    )}
                  </div>
                </div>
-               <div className="space-y-2 px-2 pb-3">
-                 {activeBlock.exercises?.map(ex => <ExerciseCard key={ex.id} item={ex} logs={logs} updateSetLog={updateSetLog} startTimer={startTimer} isGrouped timer={timer} formatTime={formatTime} />)}
+               <div className="space-y-1.5 px-0.5 pb-1">
+                 {activeBlock.exercises?.map((ex: any) => <ExerciseCard key={ex.id} item={ex} logs={logs} updateSetLog={updateSetLog} startTimer={startTimer} isGrouped timer={timer} formatTime={formatTime} />)}
                </div>
             </div>
           )
         )}
       </div>
 
-      {/* Persistent Bottom Nav for Next/Back */}
-      <div className="fixed bottom-[80px] left-0 right-0 max-w-[480px] mx-auto p-3 bg-zinc-950/90 backdrop-blur-md border-t border-zinc-800 z-10 flex gap-3 shadow-2xl">
+      {/* Bottom Nav for Next/Back */}
+      <div className="mt-4 pt-2 flex gap-3 shrink-0">
         <button
           disabled={activeBlockIndex === 0}
           onClick={() => setActiveBlockIndex(prev => prev - 1)}
@@ -98,7 +98,7 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
           onClick={() => setActiveBlockIndex(prev => prev + 1)}
           className="flex-[2] py-3 rounded-xl border border-indigo-600 bg-indigo-600 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all shadow-lg shadow-indigo-600/20 text-sm"
         >
-          {activeBlockIndex === totalBlocks - 1 ? 'Finish Workout' : 'Next Exercise'}
+          {activeBlockIndex === totalBlocks - 1 ? 'Finish' : 'Next Exercise'}
         </button>
       </div>
 
@@ -116,42 +116,42 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
   const isFullyDone = completedSets === item.sets;
 
   return (
-    <div className={`border ${isGrouped ? 'border-none bg-zinc-900 rounded-xl px-1' : 'border-zinc-800 bg-zinc-900 rounded-xl'} overflow-hidden transition-all shadow-sm ${isFullyDone && !isGrouped ? 'border-green-500/30' : ''}`}>
+    <div className={`border flex flex-col ${isGrouped ? 'border-none bg-zinc-900 rounded-xl px-0' : 'border-zinc-800 bg-zinc-900 rounded-xl'} overflow-hidden transition-all shadow-sm ${isFullyDone && !isGrouped ? 'border-green-500/30' : ''}`}>
       <div 
-        className="px-3 py-3 flex justify-between items-start transition-colors"
+        className="px-3 py-2 flex justify-between items-start transition-colors shrink-0"
       >
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-2.5">
           {isFullyDone && (
-             <div className="w-4 h-4 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+             <div className="w-3.5 h-3.5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
                 <CheckCircle2 className="w-2.5 h-2.5 text-green-500" />
              </div>
           )}
           <div>
-            <h3 className={`text-sm font-medium tracking-tight transition-colors ${isFullyDone ? 'text-green-500' : 'text-zinc-100'}`}>{item.name}</h3>
+            <h3 className={`text-[13px] font-medium tracking-tight transition-colors ${isFullyDone ? 'text-green-500' : 'text-zinc-100'} leading-tight`}>{item.name}</h3>
             <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{item.sets} Sets × {item.reps} Reps</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {timer > 0 && !isGrouped && (
-            <div className="px-2.5 py-1 bg-indigo-600/10 border border-indigo-600/30 text-indigo-400 rounded-full flex items-center gap-1.5 font-mono text-[10px] shadow-sm">
-              <TimerIcon className="w-3.5 h-3.5" />
+            <div className="px-2 py-0.5 bg-indigo-600/10 border border-indigo-600/30 text-indigo-400 rounded-full flex items-center gap-1 font-mono text-[9px] shadow-sm">
+              <TimerIcon className="w-2.5 h-2.5" />
               {formatTime(timer)}
             </div>
           )}
         </div>
       </div>
 
-      <div className="px-2 pb-3 space-y-1.5">
-        <div className="flex items-center justify-between px-1 mb-1 text-zinc-500">
+      <div className="px-2 pb-2.5 space-y-1">
+        <div className="flex items-center justify-between px-1 mb-0.5 text-zinc-500">
             <div className="flex gap-4"></div>
             {item.lastWeight && <span className="text-[9px] uppercase font-mono tracking-widest text-zinc-400">Prev: <span className="text-zinc-200">{item.lastWeight} kg</span></span>}
           </div>
 
-          <div className="grid grid-cols-[auto_1fr_1fr_auto] gap-2 text-[10px] uppercase font-mono text-zinc-500 mb-1 px-1 tracking-wider">
-            <span className="w-6 text-center">Set</span>
-            <span className="pl-2">KG</span>
-            <span className="pl-2">Reps</span>
-            <span className="w-12 text-center text-zinc-400">Done</span>
+          <div className="grid grid-cols-[auto_1fr_1fr_auto] gap-2 text-[9px] uppercase font-mono text-zinc-500 mb-0.5 px-0.5 tracking-wider">
+            <span className="w-5 text-center">Set</span>
+            <span className="pl-1.5">KG</span>
+            <span className="pl-1.5">Reps</span>
+            <span className="w-9 text-center text-zinc-400">Done</span>
           </div>
 
           {[...Array(item.sets)].map((_, idx) => {
@@ -175,20 +175,20 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
             };
 
             return (
-              <div key={idx} className={`grid grid-cols-[auto_1fr_1fr_auto] gap-2 items-center py-1.5 px-1.5 rounded-lg transition-colors ${isDone ? 'bg-green-500/10 ring-1 ring-green-500/20' : 'bg-zinc-950/30'}`}>
+              <div key={idx} className={`grid grid-cols-[auto_1fr_1fr_auto] gap-2 items-center py-1 px-1 rounded-lg transition-colors ${isDone ? 'bg-green-500/10 ring-1 ring-green-500/20' : 'bg-zinc-950/30'}`}>
                 <span className={`w-5 text-center text-[10px] font-mono flex justify-center items-center ${isDone ? 'text-green-500 font-bold tracking-tighter' : 'text-zinc-400'}`}>
                   {isDone ? <CheckCircle2 className="w-3 h-3"/> : idx + 1}
                 </span>
                 
                 <input 
-                  type="text" 
+                  type="text"
                   inputMode="decimal"
                   pattern="[0-9]*"
                   placeholder={placeholderWeight.toString()}
                   value={currentLog.weight}
                   onBlur={handleWeightBlur}
                   onChange={e => updateSetLog(item.id, idx, { ...currentLog, weight: e.target.value })}
-                  className={`w-full bg-zinc-800 border h-10 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-lg px-2 py-1 text-[15px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
+                  className={`w-full bg-zinc-800 border h-8 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-md px-1.5 py-1 text-[13px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
                 />
                 
                 <input 
@@ -199,7 +199,7 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
                   value={currentLog.reps}
                   onBlur={handleRepsBlur}
                   onChange={e => updateSetLog(item.id, idx, { ...currentLog, reps: e.target.value })}
-                  className={`w-full bg-zinc-800 border h-10 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-lg px-2 py-1 text-[15px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
+                  className={`w-full bg-zinc-800 border h-8 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-md px-1.5 py-1 text-[13px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
                 />
 
                 <button 
@@ -214,9 +214,9 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
                        startTimer(90); // Auto-start rest timer
                     }
                   }} 
-                  className={`w-10 h-10 flex justify-center items-center rounded-lg border-2 transition-all ${isDone ? 'bg-green-500 text-white border-green-500 shadow-md shadow-green-500/20' : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:border-green-500 hover:text-green-500 active:scale-95'}`}
+                  className={`w-9 h-8 flex justify-center items-center rounded-md border-2 transition-all ${isDone ? 'bg-green-500 text-white border-green-500 shadow-md shadow-green-500/20' : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:border-green-500 hover:text-green-500 active:scale-95'}`}
                 >
-                  <CheckCircle2 className="w-5 h-5" />
+                  <CheckCircle2 className="w-4 h-4" />
                 </button>
               </div>
             );
