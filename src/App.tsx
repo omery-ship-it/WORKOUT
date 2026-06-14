@@ -47,13 +47,13 @@ export default function App() {
           <span className="text-lg font-bold tracking-[0.2em] text-white uppercase leading-tight">WORKOUT</span>
         </header>
 
-        <main className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none pb-20 relative">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none relative flex flex-col">
           {currentTab === 'dashboard' && <DashboardView logs={logs} onNavigate={setCurrentTab} />}
           {currentTab === 'nutrition' && <NutritionView logs={logs} toggleMeal={toggleMeal} />}
           {currentTab === 'workout' && <WorkoutView logs={logs} updateSetLog={updateSetLog} />}
         </main>
 
-        <nav className="absolute bottom-0 w-full h-20 bg-zinc-950 border-t border-zinc-800 px-6 pb-4 pt-2 flex items-center justify-between z-50">
+        <nav className="h-20 bg-zinc-950 border-t border-zinc-800 px-6 pb-4 pt-2 flex items-center justify-between shrink-0">
           <button 
             onClick={() => setCurrentTab('dashboard')} 
             className={`flex flex-col items-center gap-1.5 transition-colors ${currentTab === 'dashboard' ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-400'}`}
