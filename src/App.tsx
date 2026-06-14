@@ -39,7 +39,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-zinc-950 font-sans text-zinc-200 flex justify-center selection:bg-indigo-600/30 overflow-hidden">
+    <div className="h-[100dvh] w-full bg-zinc-950 font-sans text-zinc-200 flex justify-center selection:bg-indigo-600/30 overflow-hidden">
       {/* Mobile Frame Container for Desktop */}
       <div className="w-full max-w-md h-full bg-zinc-950 border-x border-zinc-800 flex flex-col relative shadow-2xl overflow-hidden">
         
@@ -47,7 +47,7 @@ export default function App() {
           <span className="text-lg font-bold tracking-[0.2em] text-white uppercase leading-tight">WORKOUT</span>
         </header>
 
-        <main className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none relative flex flex-col">
+        <main className="flex-1 overflow-hidden relative flex flex-col min-h-0">
           {currentTab === 'dashboard' && <DashboardView logs={logs} onNavigate={setCurrentTab} />}
           {currentTab === 'nutrition' && <NutritionView logs={logs} toggleMeal={toggleMeal} />}
           {currentTab === 'workout' && <WorkoutView logs={logs} updateSetLog={updateSetLog} />}

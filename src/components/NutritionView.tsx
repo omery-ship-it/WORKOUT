@@ -7,7 +7,7 @@ export default function NutritionView({ logs, toggleMeal }: { logs: DailyLog, to
   const [expandedMeal, setExpandedMeal] = useState<string | null>(null);
   
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 flex-1 overflow-y-auto scrollbar-none h-full">
       
       <div className="space-y-1">
         <h2 className="text-2xl font-light tracking-tight text-white">Daily Nutrition</h2>

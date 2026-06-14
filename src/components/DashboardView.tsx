@@ -12,7 +12,7 @@ export default function DashboardView({ logs, onNavigate }: { logs: DailyLog, on
   const todayWorkout = WORKOUT_DAYS[0];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 flex-1 overflow-y-auto scrollbar-none h-full">
       
       <div className="space-y-1">
         <h2 className="text-2xl font-light tracking-tight text-white">Today's Overview</h2>

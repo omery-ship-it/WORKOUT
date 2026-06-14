@@ -39,10 +39,10 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
   const totalBlocks = activeWorkout.blocks.length;
 
   return (
-    <div className="p-4 flex flex-col flex-1 h-full">
+    <div className="p-4 flex flex-col h-full overflow-y-auto scrollbar-none">
       
       {/* Day Selector & Progress */}
-      <div className="flex items-center gap-3 pb-3 shrink-0">
+      <div className="flex items-center gap-3 pb-3 shrink-0 sticky top-0 bg-zinc-950/90 backdrop-blur-sm z-10 pt-2 -mt-2">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1">
           {WORKOUT_DAYS.map(day => (
              <button 
@@ -59,12 +59,12 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 pb-4 overflow-y-auto scrollbar-none min-h-0">
+      <div className="flex flex-col shrink-0 pb-4">
         {activeBlock && (
           activeBlock.type === 'single' ? (
             <ExerciseCard key={activeBlock.id} item={activeBlock} logs={logs} updateSetLog={updateSetLog} startTimer={startTimer} timer={timer} formatTime={formatTime} />
           ) : (
-            <div key={activeBlock.id} className="relative bg-zinc-900 border border-orange-900/40 rounded-xl overflow-hidden p-1 group shadow-none flex flex-col">
+            <div key={activeBlock.id} className="relative bg-zinc-900 border border-orange-900/40 rounded-xl overflow-hidden p-1 group shadow-none flex flex-col shrink-0">
                <div className="flex items-center justify-between px-2 pt-2 pb-1.5 shrink-0">
                  <span className="text-[9px] text-orange-500 uppercase font-mono tracking-widest px-2 py-1 bg-orange-500/10 rounded">{activeBlock.name} ({activeBlock.type})</span>
                  <div className="flex items-center gap-2">
@@ -85,7 +85,7 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
       </div>
 
       {/* Bottom Nav for Next/Back */}
-      <div className="mt-2 pt-2 flex gap-3 shrink-0 border-t border-zinc-800/50">
+      <div className="mt-4 pt-4 flex gap-3 shrink-0 border-t border-zinc-800/50 pb-6">
         <button
           disabled={activeBlockIndex === 0}
           onClick={() => setActiveBlockIndex(prev => prev - 1)}
@@ -116,7 +116,7 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
   const isFullyDone = completedSets === item.sets;
 
   return (
-    <div className={`border flex flex-col ${isGrouped ? 'border-none bg-zinc-900 rounded-xl px-0' : 'border-zinc-800 bg-zinc-900 rounded-xl'} overflow-hidden transition-all shadow-sm ${isFullyDone && !isGrouped ? 'border-green-500/30' : ''}`}>
+    <div className={`border flex flex-col ${isGrouped ? 'border-none bg-zinc-900 rounded-xl px-0' : 'border-zinc-800 bg-zinc-900 rounded-xl'} overflow-hidden transition-all shadow-sm shrink-0 ${isFullyDone && !isGrouped ? 'border-green-500/30' : ''}`}>
       <div 
         className="px-3 py-2 flex justify-between items-start transition-colors shrink-0"
       >
@@ -175,7 +175,7 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
             };
 
             return (
-              <div key={idx} className={`grid grid-cols-[auto_1fr_1fr_auto] gap-2 items-center py-1 px-1 rounded-lg transition-colors ${isDone ? 'bg-green-500/10 ring-1 ring-green-500/20' : 'bg-zinc-950/30'}`}>
+              <div key={idx} className={`grid grid-cols-[auto_1fr_1fr_auto] gap-2 items-center py-0.5 px-1 rounded-lg transition-colors ${isDone ? 'bg-green-500/10 ring-1 ring-green-500/20' : 'bg-zinc-950/30'}`}>
                 <span className={`w-5 text-center text-[10px] font-mono flex justify-center items-center ${isDone ? 'text-green-500 font-bold tracking-tighter' : 'text-zinc-400'}`}>
                   {isDone ? <CheckCircle2 className="w-3 h-3"/> : idx + 1}
                 </span>
@@ -188,7 +188,7 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
                   value={currentLog.weight}
                   onBlur={handleWeightBlur}
                   onChange={e => updateSetLog(item.id, idx, { ...currentLog, weight: e.target.value })}
-                  className={`w-full bg-zinc-800 border h-8 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-md px-1.5 py-1 text-[13px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
+                  className={`w-full bg-zinc-800 border h-7 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-[4px] px-1 py-0.5 text-[12px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
                 />
                 
                 <input 
@@ -199,7 +199,7 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
                   value={currentLog.reps}
                   onBlur={handleRepsBlur}
                   onChange={e => updateSetLog(item.id, idx, { ...currentLog, reps: e.target.value })}
-                  className={`w-full bg-zinc-800 border h-8 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-md px-1.5 py-1 text-[13px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
+                  className={`w-full bg-zinc-800 border h-7 ${isDone ? 'border-green-500/50 text-green-400 font-bold' : 'border-zinc-700 text-zinc-100 font-medium'} rounded-[4px] px-1 py-0.5 text-[12px] focus:outline-none focus:border-indigo-600 transition-colors text-center`} 
                 />
 
                 <button 
@@ -214,9 +214,9 @@ function ExerciseCard({ item, logs, updateSetLog, startTimer, isGrouped = false,
                        startTimer(90); // Auto-start rest timer
                     }
                   }} 
-                  className={`w-9 h-8 flex justify-center items-center rounded-md border-2 transition-all ${isDone ? 'bg-green-500 text-white border-green-500 shadow-md shadow-green-500/20' : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:border-green-500 hover:text-green-500 active:scale-95'}`}
+                  className={`w-8 h-7 flex justify-center items-center rounded-[4px] border transition-all ${isDone ? 'bg-green-500 text-white border-green-500 shadow-md shadow-green-500/20' : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:border-green-500 hover:text-green-500 active:scale-95'}`}
                 >
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                 </button>
               </div>
             );
