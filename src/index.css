@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+html, body, #root {
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background-color: theme('colors.zinc.950');
+  position: fixed;
+  inset: 0;
+}
