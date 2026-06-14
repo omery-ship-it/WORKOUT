@@ -39,11 +39,11 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
   const totalBlocks = activeWorkout.blocks.length;
 
   return (
-    <div className="p-4 flex flex-col h-full overflow-y-auto scrollbar-none">
+    <div className="flex flex-col h-full overflow-hidden bg-zinc-950 relative">
       
       {/* Day Selector & Progress */}
-      <div className="flex items-center gap-3 pb-3 shrink-0 sticky top-0 bg-zinc-950/90 backdrop-blur-sm z-10 pt-2 -mt-2">
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1">
+      <div className="px-4 pt-2 pb-3 flex items-center gap-3 shrink-0 bg-zinc-950/90 backdrop-blur-sm z-10 border-b border-white/5">
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1 pb-1">
           {WORKOUT_DAYS.map(day => (
              <button 
                key={day.id}
@@ -59,7 +59,7 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
         </div>
       </div>
 
-      <div className="flex flex-col shrink-0 pb-4">
+      <div className="flex-1 overflow-y-auto scrollbar-none px-4 pt-4 pb-4 min-h-0">
         {activeBlock && (
           activeBlock.type === 'single' ? (
             <ExerciseCard key={activeBlock.id} item={activeBlock} logs={logs} updateSetLog={updateSetLog} startTimer={startTimer} timer={timer} formatTime={formatTime} />
@@ -85,7 +85,7 @@ export default function WorkoutView({ logs, updateSetLog }: { logs: DailyLog, up
       </div>
 
       {/* Bottom Nav for Next/Back */}
-      <div className="mt-4 pt-4 flex gap-3 shrink-0 border-t border-zinc-800/50 pb-6">
+      <div className="p-4 flex gap-3 shrink-0 border-t border-zinc-800/50 bg-zinc-950 z-20 pb-6 shadow-[0_-15px_30px_-15px_rgba(0,0,0,0.8)] relative">
         <button
           disabled={activeBlockIndex === 0}
           onClick={() => setActiveBlockIndex(prev => prev - 1)}
